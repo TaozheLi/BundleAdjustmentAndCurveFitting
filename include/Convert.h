@@ -2,11 +2,12 @@
 // Created by simmons on 6/2/23.
 //
 #include "opencv2/opencv.hpp"
+#include "BundleAdjustmentCostFunction.h"
 class Convert{
 public:
     Convert();
 //    bool Convert2Dto3D(cv::KeyPoint &p, cv::Vec3f P);
-    bool static Convert2Dto3D(cv::KeyPoint &p, double * P, double &depth);
+    bool static Convert2Dto3D(cv::KeyPoint &p, double* P, double &depth);
 //    bool Convert2Dto3D(double *p, double * P);
     bool static ConvertMatToArray(cv::Mat &matrix, double * p);
     bool static ConvertMatToArray(cv::Mat &matrix, float * p);

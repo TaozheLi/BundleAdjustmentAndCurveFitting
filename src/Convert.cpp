@@ -64,11 +64,28 @@ bool Convert::GetR_t_Current(double *camera, double *t) {
     return false;
 }
 
+//template<typename DataType>
+//bool Convert::Convert2Dto3D(cv::KeyPoint &p, DataType *P, DataType &depth) {
+//    const DataType u = p.pt.x, v = p.pt.y;
+//    DataType x, y, z=depth;
+//    x = (u-BundleAdjustmentCostFunction::get_cx()) * z * BundleAdjustmentCostFunction::get_fx_inv();
+//    y = (v - BundleAdjustmentCostFunction::get_cy()) * z * BundleAdjustmentCostFunction::get_fy_inv();
+//    cv::Mat_<DataType> _(3, 1);
+//    _.at(0, 0) = x;_.at(1,0)=y;_.at(2,0)=z;
+//    std::cout<<"_.type ===>"<<_.type()<<std::endl;
+//    if(_.type()!= LastFrameR.type()) return false;
+//    cv::Mat temp = LastFrameR.t() * (_ - LastFramet);
+//    if(Convert::ConvertMatToArray(temp, P))
+//        return true;
+//    return false;
+//
+//}
+
 bool Convert::Convert2Dto3D(cv::KeyPoint &p, double *P, double &depth) {
     const double u = p.pt.x, v = p.pt.y;
     double x, y, z=depth;
-    x = (u-BundleAdjustmentCostFunction<float, double>::get_cx()) * z * BundleAdjustmentCostFunction<float, double>::get_fx_inv();
-    y = (v - BundleAdjustmentCostFunction<float, double>::get_cy()) * z * BundleAdjustmentCostFunction<float, double>::get_fy_inv();
+    x = (u-BundleAdjustmentCostFunction::get_cx()) * z * BundleAdjustmentCostFunction::get_fx_inv();
+    y = (v - BundleAdjustmentCostFunction::get_cy()) * z * BundleAdjustmentCostFunction::get_fy_inv();
     cv::Mat _(3, 1, CV_64F);
     _.at<double>(0, 0) = x;_.at<double>(1,0)=y;_.at<double>(2,0)=z;
     if(_.type()!= LastFrameR.type()) return false;
@@ -77,20 +94,6 @@ bool Convert::Convert2Dto3D(cv::KeyPoint &p, double *P, double &depth) {
     return false;
 
 }
-
-//bool Convert::Convert2Dto3D(cv::KeyPoint &p, double *P, double &depth) {
-//    const double u = p.pt.x, v = p.pt.y;
-//    double x, y, z=depth;
-//    x = (u-BundleAdjustmentCostFunction::get_cx()) * z * BundleAdjustmentCostFunction::get_fx_inv();
-//    y = (v - BundleAdjustmentCostFunction::get_cy()) * z * BundleAdjustmentCostFunction::get_fy_inv();
-//    cv::Mat _(3, 1, CV_64F);
-//    _.at<double>(0, 0) = x;_.at<double>(1,0)=y;_.at<double>(2,0)=z;
-//    if(_.type()!= LastFrameR.type()) return false;
-//    cv::Mat temp = LastFrameR.t() * (_ - LastFramet);
-//    if(Convert::ConvertMatToArray(temp, P)) return true;
-//    return false;
-//
-//}
 
 bool Convert::SetStaticMatrix(cv::Mat &LTcw, cv::Mat &CTcw) {
     LTcw.copyTo(LastFrameTcw);
@@ -101,6 +104,7 @@ bool Convert::SetStaticMatrix(cv::Mat &LTcw, cv::Mat &CTcw) {
     CTcw.rowRange(0, 3).col(3).copyTo(CurrentFramet);
     initialize = true;
 }
+
 
 cv::Mat Convert::LastFrameTcw = cv::Mat::zeros(4, 4, CV_64F);
 cv::Mat Convert::LastFrameR = cv::Mat::zeros(3, 3, CV_64F);

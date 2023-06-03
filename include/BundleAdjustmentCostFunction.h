@@ -2,6 +2,9 @@
 // Created by simmons on 6/1/23.
 //
 
+#ifndef BUNDLEADJUSTMENTWITHVISUALIZATION_BUNDLEADJUTMENTCOSTFUNCTION_H
+#define BUNDLEADJUSTMENTWITHVISUALIZATION_BUNDLEADJUTMENTCOSTFUNCTION_H
+
 
 #include <opencv2/opencv.hpp>
 #include <ceres/ceres.h>
@@ -53,7 +56,7 @@ private:
     double obj_x, obj_y;
 };
 
-
+#endif //BUNDLEADJUSTMENTWITHVISUALIZATION_BUNDLEADJUTMENTCOSTFUNCTION_H
 
 
 
