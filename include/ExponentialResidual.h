@@ -7,7 +7,8 @@
 
 #endif //BUNDLEADJUSTMENTWITHVISUALIZATION_EXPONENTIALRESIDUAL_H
 
-struct ExponentialResidual{
+class ExponentialResidual{
+public:
     template<typename DataType>
     ExponentialResidual(DataType x, DataType y):x_(x), y_(y){
     }
