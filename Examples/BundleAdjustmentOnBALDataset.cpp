@@ -24,7 +24,7 @@ int main() {
 
 
     DataType fx = 1.5, fy = 20, cx = 11, cy = 15;
-    BundleAdjustmentCostFunction<DataType, double>::set_static_member(fx, fy, cx, cy);
+    BundleAdjustmentCostFunction::set_static_member(fx, fy, cx, cy);
 
     cv::Mat_<DataType> C(4, 4);
     cv::Mat_<DataType> B(4,4);
@@ -42,8 +42,8 @@ int main() {
     for (int i = 0; i < 2; i++) {
         DataType depth = 30;
 //        Convert::Convert2Dto3D(S[i], points[i], depth);
-        ceres::CostFunction * costFunction = new ceres::AutoDiffCostFunction<BundleAdjustmentCostFunction<DataType, double>, 2, 6, 3>
-                (new BundleAdjustmentCostFunction<DataType, double>(DataType(S[i].pt.x), DataType(S[i].pt.y)));
+        ceres::CostFunction * costFunction = new ceres::AutoDiffCostFunction<BundleAdjustmentCostFunction, 2, 6, 3>
+                (new BundleAdjustmentCostFunction(DataType(S[i].pt.x), DataType(S[i].pt.y)));
        problem.AddResidualBlock(costFunction, nullptr, camera, points[i]);
     }
     ceres::Solver::Options options;
